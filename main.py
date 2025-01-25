@@ -14,9 +14,12 @@ clock = pygame.time.Clock()
 test_font = pygame.font.Font('fonts/Pixeltype.ttf', 50)
 
 #import images
-sky_surface = pygame.image.load('graphics/Sky.png')
-ground_surface = pygame.image.load('graphics/ground.png')
+sky_surface = pygame.image.load('graphics/Sky.png').convert()
+ground_surface = pygame.image.load('graphics/ground.png').convert()
 text_surface = test_font.render('My Game', False, 'Black')
+
+snail_surface = pygame.image.load('graphics/snail/snail1.png').convert_alpha()
+snail_x_pos = 600
 
 
 while True:
@@ -30,6 +33,10 @@ while True:
     screen.blit(sky_surface, (0,0))
     screen.blit(ground_surface, (0,300))
     screen.blit(text_surface, (340, 50))
+    snail_x_pos -= 2
+    if snail_x_pos < -100: snail_x_pos = 800
+    screen.blit(snail_surface, (snail_x_pos, 250))
+    
     pygame.display.update()
     #for 60fps
     clock.tick(60)

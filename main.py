@@ -7,6 +7,13 @@ HEIGHT = 400
 # colors
 title_color = (69,69,69)
 
+def display_score():
+    current_time = int(pygame.time.get_ticks() / 1000) - start_time
+    score_surface = my_main_font.render(f'Score: {current_time}', False, (64,64,64))
+    score_rect = score_surface.get_rect(bottomright=(750,400))
+    screen.blit(score_surface, score_rect)
+    print(current_time)
+
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT ))
 pygame.display.set_caption('Intro Pygame')
@@ -18,6 +25,7 @@ my_main_font = pygame.font.Font('fonts/Pixeltype.ttf', 50)
 
 # game state
 game_active = True
+start_time = 0
 
 # environment
 sky_surface = pygame.image.load('graphics/Sky.png').convert()
@@ -27,8 +35,8 @@ ground_surface = pygame.image.load('graphics/ground.png').convert()
 title_surface = my_main_font.render('My PyGame', False, title_color)
 title_rect = title_surface.get_rect(center=(400,50))
 
-score_surface = my_main_font.render('Scores: ', False, ' Red')
-score_rect = score_surface.get_rect(bottomright=(750,400))
+# score_surface = my_main_font.render('Scores: ', False, ' Red')
+# score_rect = score_surface.get_rect(bottomright=(750,400))
 
 #characters
 snail_surface = pygame.image.load('graphics/snail/snail1.png').convert_alpha()
@@ -60,6 +68,7 @@ while True:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 game_active = True
                 snail_rect.left = 800
+                start_time = int(pygame.time.get_ticks() / 1000)
         
     if game_active:
         screen.blit(sky_surface, (0,0))
@@ -67,9 +76,9 @@ while True:
         
         pygame.draw.rect(screen, '#c0e8ec', title_rect)
         pygame.draw.rect(screen, '#c0e8ec', title_rect, 10)
-        
         screen.blit(title_surface, title_rect)
-        screen.blit(score_surface, score_rect)
+        # screen.blit(score_surface, score_rect)
+        display_score()
         
         snail_rect.x -= 3
         if snail_rect.right <=0: snail_rect.left = 800
